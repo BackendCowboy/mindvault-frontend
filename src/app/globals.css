@@ -119,4 +119,52 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Mobile-specific optimizations - Add to end of globals.css */
+
+@media (max-width: 768px) {
+  /* Better touch targets */
+  button, a, input, textarea {
+    min-height: 44px;
+  }
+  
+  /* Remove tap highlight on iOS */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent zoom on input focus */
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+
+/* Touch-friendly interactions */
+.mobile-card {
+  @apply transition-all duration-200;
+}
+
+.mobile-card:active {
+  @apply scale-95 bg-gray-50;
+}
+
+.mobile-button:active {
+  @apply scale-95;
+}
+
+/* Floating Action Button */
+.fab {
+  @apply fixed bottom-20 right-4 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 md:hidden z-30;
+}
+
+.fab:active {
+  @apply scale-90;
+}
 }

@@ -5,6 +5,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail]       = useState("");
@@ -46,28 +47,35 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto py-16">
-      <h1 className="text-2xl font-bold mb-6">Log in to MindVault</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <form onSubmit={handleLogin} className="space-y-4">
-        <Input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-        <Input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-        <Button type="submit" className="w-full">
-          Log In
-        </Button>
-      </form>
-    </div>
-  );
+  <div className="max-w-md mx-auto py-16">
+    <h1 className="text-2xl font-bold mb-6">Log in to MindVault</h1>
+    {error && <p className="text-red-500 mb-4">{error}</p>}
+    <form onSubmit={handleLogin} className="space-y-4">
+      <Input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        required
+      />
+      <Input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        required
+      />
+      <Button type="submit" className="w-full">
+        Log In
+      </Button>
+    </form>
+
+    <p className="text-sm text-center mt-4">
+      Don’t have an account?{" "}
+      <Link href="/signup" className="text-blue-600 hover:underline">
+        Sign up
+      </Link>
+    </p>
+  </div>
+);
 }

@@ -38,3 +38,4 @@ next-env.d.ts
 
 # ✅ Optional: Ignore VSCode settings if using workspace config
 .vscode/
+.vercel

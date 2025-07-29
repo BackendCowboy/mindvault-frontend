@@ -2,6 +2,7 @@ import Layout from "@/components/ui/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import PWAInstaller from "@/components/PWAInstaller";
 
 const quotes = [
   "Growth is built one entry at a time.",
@@ -60,6 +61,9 @@ export default function Home() {
           </Card>
         </div>
       </div>
+      
+      {/* PWA Install Prompt */}
+      <PWAInstaller />
     </Layout>
   );
 }

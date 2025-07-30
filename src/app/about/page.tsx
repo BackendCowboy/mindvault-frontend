@@ -90,7 +90,7 @@ export default function AboutPage() {
               </div>
               <p className="text-gray-700 leading-relaxed">
                 I believe healing happens when we create space to understand ourselves. MindVault provides 
-                that space—a private, thoughtful place to explore your emotions, track your growth, and 
+                that space: a private, thoughtful place to explore your emotions, track your growth, and 
                 discover patterns in your mental health journey.
               </p>
             </CardContent>
@@ -104,7 +104,7 @@ export default function AboutPage() {
               </div>
               <p className="text-gray-700 leading-relaxed">
                 Every feature, every design choice, and every line of code comes from genuine experience 
-                with what helps in healing. This isn&apos;t just an app—it&apos;s a tool I use myself, constantly 
+                with what helps in healing. This isn&apos;t just an app, it&apos;s a tool I use myself, constantly 
                 improving based on real needs.
               </p>
             </CardContent>

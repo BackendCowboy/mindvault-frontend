@@ -1,7 +1,10 @@
+// src/app/signup/page.tsx
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -80,8 +83,7 @@ export default function SignupPage() {
           required
           disabled={loading}
         />
-        <Input
-          type="password"
+        <PasswordInput
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"

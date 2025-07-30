@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import PWAInstaller from "@/components/PWAInstaller";
 import { BookOpen, Heart, TrendingUp, Sparkles } from "lucide-react";
+import { apiFetch } from "@/lib/api";
 
 const quotes = [
   "Growth is built one entry at a time.",
@@ -18,6 +19,15 @@ const quotes = [
   "Your mental health journey matters.",
   "Small steps lead to big changes.",
 ];
+
+interface JournalEntry {
+  id: number;
+  title: string;
+  mood: string;
+  content: string;
+  reflection: string;
+  created_at: string;
+}
 
 interface DashboardStats {
   journalCount: number;
@@ -50,16 +60,27 @@ export default function Home() {
 
   const loadDashboardStats = async () => {
     try {
-      // TODO: Replace with actual API calls
-      // Mock data for now
+      // Load real data from your amazing APIs!
+      const [journals, streak, stats] = await Promise.all([
+        apiFetch<JournalEntry[]>("/journals"),
+        apiFetch<{current_streak: number, longest_streak: number}>("/journals/streak"),
+        apiFetch<{total_entries: number, most_common_mood: string}>("/journals/stats")
+      ]);
+      
       setStats({
-        journalCount: 5,
-        moodCount: 12,
-        lastMood: "happy",
-        streak: 3,
+        journalCount: journals.length,
+        moodCount: 12, // Keep as mock until mood API is ready
+        lastMood: stats.most_common_mood || "happy",
+        streak: streak.current_streak,
       });
     } catch (error) {
       console.error("Failed to load dashboard stats:", error);
+      // Fallback to showing 0 if API fails
+      setStats({
+        journalCount: 0,
+        moodCount: 0,
+        streak: 0,
+      });
     } finally {
       setLoading(false);
     }

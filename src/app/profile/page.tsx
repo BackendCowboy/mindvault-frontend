@@ -73,18 +73,51 @@ export default function ProfilePage() {
 
   const loadProfileData = async () => {
     try {
-      // Load all profile data in parallel
-      const [statsData, streakData, moodData, weekData] = await Promise.all([
-        apiFetch<JournalStats>("/journals/stats"),
-        apiFetch<StreakData>("/journals/streak"),
-        apiFetch<MoodSummary>("/journals/mood-summary"),
-        apiFetch<SevenDaySummary>("/journals/7-day-summary")
-      ]);
+      // Load data individually with error handling for each endpoint
+      let statsData = null;
+      let streakData = null; 
+      let moodData = null;
+      let weekData = null;
 
-      setStats(statsData);
-      setStreak(streakData);
-      setMoodSummary(moodData);
-      setSevenDayData(weekData);
+      try {
+        statsData = await apiFetch<JournalStats>("/journals/stats");
+      } catch (e) {
+        console.log("Stats endpoint failed (probably no entries yet):", e);
+      }
+
+      try {
+        streakData = await apiFetch<StreakData>("/journals/streak");
+      } catch (e) {
+        console.log("Streak endpoint failed (probably no entries yet):", e);
+      }
+
+      try {
+        moodData = await apiFetch<MoodSummary>("/journals/mood-summary");
+      } catch (e) {
+        console.log("Mood summary endpoint failed (probably no entries yet):", e);
+      }
+
+      try {
+        weekData = await apiFetch<SevenDaySummary>("/journals/7-day-summary");
+      } catch (e) {
+        console.log("7-day summary endpoint failed (probably no entries yet):", e);
+      }
+
+      // Set data with fallbacks for null values
+      setStats(statsData || {
+        total_entries: 0,
+        total_words: 0,
+        average_words_per_entry: 0,
+        most_common_mood: undefined
+      });
+      
+      setStreak(streakData || {
+        current_streak: 0,
+        longest_streak: 0
+      });
+      
+      setMoodSummary(moodData || { summary: {} });
+      setSevenDayData(weekData || { last_7_days: {} });
 
       // Extract user email from JWT token
       const token = localStorage.getItem("token");

@@ -76,6 +76,13 @@ export default function SiteHeader({
                   AI Insights
                 </Button>
               </Link>
+              <Link href="/about">
+                <Button 
+                  variant={pathname === "/about" ? "default" : "ghost"}
+                >
+                  About
+                </Button>
+              </Link>
               <Link href="/profile">
                 <Button 
                   variant={pathname === "/profile" ? "default" : "ghost"}

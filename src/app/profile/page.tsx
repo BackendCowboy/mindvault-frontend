@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Layout from "@/components/ui/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import SettingsModal from "@/components/ui/settings-modal";
 import { 
   User, 
   Calendar, 
@@ -22,6 +23,7 @@ import { apiFetch } from "@/lib/api";
 interface UserProfile {
   id: number;
   email: string;
+  name?: string;
 }
 
 interface JournalStats {
@@ -60,6 +62,7 @@ export default function ProfilePage() {
   const [sevenDayData, setSevenDayData] = useState<SevenDaySummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -127,14 +130,16 @@ export default function ProfilePage() {
           const payload = JSON.parse(atob(token.split('.')[1]));
           setUser({
             id: payload.user_id || 1, // Fallback ID
-            email: payload.sub // Email is stored in 'sub' field
+            email: payload.sub, // Email is stored in 'sub' field
+            name: payload.name || "" // Add name if available in token
           });
         } catch (e) {
           console.error("Error decoding token:", e);
           // Fallback user data if token decode fails
           setUser({
             id: 1,
-            email: "user@example.com"
+            email: "user@example.com",
+            name: ""
           });
         }
       }
@@ -145,6 +150,10 @@ export default function ProfilePage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleUserUpdate = (email: string, name?: string) => {
+    setUser(prev => prev ? { ...prev, email, name } : null);
   };
 
   const getMoodEmoji = (mood: string) => {
@@ -206,13 +215,19 @@ export default function ProfilePage() {
                 <User className="h-8 w-8 text-blue-600" />
               </div>
               <div className="flex-1">
-                <h1 className="text-2xl font-bold text-gray-900">Your Profile</h1>
+                <h1 className="text-2xl font-bold text-gray-900">
+                  {user?.name || "Your Profile"}
+                </h1>
                 <p className="text-gray-600">{user?.email}</p>
                 <p className="text-sm text-gray-500">
                   Member since {stats?.first_entry ? new Date(stats.first_entry).toLocaleDateString() : "recently"}
                 </p>
               </div>
-              <Button variant="outline" className="flex items-center space-x-2">
+              <Button 
+                variant="outline" 
+                className="flex items-center space-x-2"
+                onClick={() => setShowSettings(true)}
+              >
                 <Settings className="h-4 w-4" />
                 <span>Settings</span>
               </Button>
@@ -426,6 +441,15 @@ export default function ProfilePage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Settings Modal */}
+        <SettingsModal
+          isOpen={showSettings}
+          onClose={() => setShowSettings(false)}
+          userEmail={user?.email || ""}
+          userName={user?.name}
+          onUserUpdate={handleUserUpdate}
+        />
       </div>
     </Layout>
   );

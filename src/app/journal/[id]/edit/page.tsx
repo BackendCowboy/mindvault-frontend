@@ -3,10 +3,10 @@
 
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/textarea";
 import { Button } from "@/components/ui/button";
+import SiteHeader from "@/components/ui/site-header";
 import { apiFetch } from "@/lib/api";
 
 interface Entry {
@@ -76,46 +76,118 @@ export default function EditJournalEntry() {
     }
   };
 
-  if (loading) return <p className="p-6">Loading…</p>;
-  if (error)   return <p className="p-6 text-red-500">{error}</p>;
-  if (!entry) return <p className="p-6">Entry not found.</p>;
+  if (loading) {
+    return (
+      <div className="flex min-h-screen flex-col bg-gray-50">
+        <SiteHeader showBackButton={true} />
+        <main className="flex-1 p-4 max-w-4xl mx-auto w-full">
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading entry...</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen flex-col bg-gray-50">
+        <SiteHeader showBackButton={true} />
+        <main className="flex-1 p-4 max-w-4xl mx-auto w-full">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+            {error}
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (!entry) {
+    return (
+      <div className="flex min-h-screen flex-col bg-gray-50">
+        <SiteHeader showBackButton={true} />
+        <main className="flex-1 p-4 max-w-4xl mx-auto w-full">
+          <div className="text-center py-12">
+            <p className="text-gray-600">Entry not found.</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-2xl mx-auto mt-12 p-6 bg-white rounded shadow">
-      <h1 className="text-2xl font-bold mb-4">Edit Journal Entry</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <Input
-          placeholder="Mood"
-          value={mood}
-          onChange={(e) => setMood(e.target.value)}
-          required
-        />
-        <Textarea
-          placeholder="Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-          className="h-40"
-        />
-        {error && <p className="text-red-500">{error}</p>}
+    <div className="flex min-h-screen flex-col bg-gray-50">
+      <SiteHeader 
+        showBackButton={true} 
+        backTo="/journal"
+        backLabel="Back to Journal"
+      />
+      
+      <main className="flex-1 p-4 max-w-4xl mx-auto w-full">
+        <div className="bg-white rounded-lg shadow p-6">
+          <h1 className="text-2xl font-bold mb-6 text-gray-900">Edit Journal Entry</h1>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Title
+              </label>
+              <Input
+                placeholder="Enter a title for your entry"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+            </div>
 
-        {/* BUTTON ROW */}
-        <div className="flex gap-2">
-          <Button type="submit">Save Changes</Button>
-          <Link
-            href="/journal"
-            className="px-4 py-2 border rounded text-gray-700 hover:bg-gray-100"
-          >
-            Cancel
-          </Link>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Mood
+              </label>
+              <Input
+                placeholder="How are you feeling?"
+                value={mood}
+                onChange={(e) => setMood(e.target.value)}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Content
+              </label>
+              <Textarea
+                placeholder="Write your thoughts..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                required
+                className="h-40"
+              />
+            </div>
+
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+                {error}
+              </div>
+            )}
+
+            <div className="flex gap-3 pt-4">
+              <Button type="submit" className="flex-1">
+                Save Changes
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => router.push("/journal")}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+            </div>
+          </form>
         </div>
-      </form>
+      </main>
     </div>
   );
 }

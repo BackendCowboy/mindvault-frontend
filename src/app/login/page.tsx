@@ -40,7 +40,8 @@ export default function LoginPage() {
         token_type: string;
       };
       localStorage.setItem("token", body.access_token);
-      router.push("/journal");
+      // Redirect to dashboard instead of journal
+      router.push("/");
     } else {
       const err = await res.json().catch(() => ({}));
       setError(err.detail || "Login failed");

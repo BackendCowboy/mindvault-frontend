@@ -157,11 +157,24 @@ export default function JournalList() {
                 </div>
 
                 {/* Entry Content */}
-                <div className="mb-4">
-                  <p className="text-gray-700 leading-relaxed line-clamp-3">
-                    {entry.content}
-                  </p>
-                </div>
+<div className="mb-4">
+  <div className="text-gray-700 leading-relaxed">
+    {entry.content.length > 300 ? (
+      <details className="group">
+        <summary className="cursor-pointer text-blue-600 hover:text-blue-800">
+          {entry.content.substring(0, 300)}...
+          <span className="ml-2 text-sm group-open:hidden">Read more ↓</span>
+          <span className="ml-2 text-sm hidden group-open:inline">Show less ↑</span>
+        </summary>
+        <div className="mt-2">
+          {entry.content}
+        </div>
+      </details>
+    ) : (
+      <p>{entry.content}</p>
+    )}
+  </div>
+</div>
 
                 {/* AI Reflection */}
                 {entry.reflection && (

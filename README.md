@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 MindVault
 
-## Getting Started
+MindVault is a full-stack journaling platform that uses AI to analyze emotional patterns and provide personalized insights. Built with FastAPI, PostgreSQL, and Next.js, it’s designed for developers, mental health enthusiasts, and productivity hackers.
 
-First, run the development server:
+---
+
+## 🚀 Live Demo
+
+🔗 [mindvault-frontend.vercel.app](https://mindvault-frontend-3lvnpqmum-bigfuals-projects.vercel.app)
+
+---
+
+## 📸 Screenshots
+
+### 🏠 Dashboard
+![Dashboard](./screenshots/Dashboard.png)
+
+### 🔐 Login
+![Login](./screenshots/Login.png)
+
+### 📓 Journal Page
+![Journal](./screenshots/Journal.png)
+
+### 👤 Profile Page
+![Profile](./screenshots/Profile.png)
+
+---
+
+## 🧩 Features
+
+- 📔 **Journaling** – Add and manage private journal entries
+- 📈 **Mood Tracker** – Visualize mood trends over time
+- 🧠 **AI Insights** – OpenAI integration for reflective analysis
+- 🧾 **7-Day Summary API** – Track your journaling streaks and behavioral patterns
+- 🔐 **JWT Authentication** – Secure access and route protection
+- 📊 **Health Monitoring** – Custom endpoints and system metrics
+
+---
+
+## ⚙️ Tech Stack
+
+| Layer            | Tech                           |
+|------------------|--------------------------------|
+| Frontend         | Next.js, TailwindCSS, ShadCN UI|
+| Backend          | FastAPI, SQLModel, OpenAI API  |
+| Database         | PostgreSQL                     |
+| Containerization | Docker, Railway                |
+| Auth             | JWT, Passlib                   |
+| CI/CD            | GitHub Actions                 |
+
+---
+
+## 📦 Backend Repository
+
+🔗 [MindVault Backend](https://github.com/BackendCowboy/mindvault-backend)
+
+---
+
+## 🧪 Local Development
 
 ```bash
+# Clone frontend
+git clone https://github.com/BackendCowboy/mindvault-frontend.git
+cd mindvault-frontend
+
+# Install dependencies
+npm install
+
+# Run locally
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+💡 Inspiration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+“Small steps lead to big changes.”
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+MindVault is built as a safe and powerful digital space to reflect, grow, and understand your mental landscape using the power of technology.
 
-## Learn More
+⸻
 
-To learn more about Next.js, take a look at the following resources:
+🛡️ License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT © Aliou Cissé
